@@ -10,8 +10,13 @@ public class ConvertCurrency {
     private static final String WEBDRIVER_PATH = "/usr/local/bin/chromedriver";
     public WebDriver driver;
 
+    // Banks URL
     private static String rbcUrl = "https://www.rbcbank.com/cgi-bin/tools/cadusd-foreign-exchange-calculator/start.cgi";
     private static String tdUrl = "https://www.td.com/ca/en/personal-banking/solutions/exchange/currency-converter";
+
+    // Credit card companies URL
+    private static String mastercardUrl = "https://www.mastercard.ca/en-ca/personal/get-support/convert-currency.html";
+    private static String visaUrl = "https://www.visa.ca/en_CA/support/consumer/travel-support/exchange-rate-calculator.html";
 
     @BeforeEach
     public void beforeEachTest() {
@@ -25,6 +30,7 @@ public class ConvertCurrency {
         driver.close();
     }
 
+    // Go to bank URLs and scrape the page to determine the best currency rate
     private void openBankWebpages(){
         String[] listOfBanks = {"CIBC", "RBC", "TD", "Tangerine"};
 
@@ -39,12 +45,23 @@ public class ConvertCurrency {
         }
     }
 
+    // Go to credit card URLs and scrape the page to determine the best currency rate
     private void openCreditCardWebpages() {
         String[] listOfCreditCards = {"Mastercard", "Visa"};
 
+        for (String bank : listOfCreditCards) {
+            if (bank.equals("Mastercard")) {
+                driver.get(mastercardUrl);
+            } else if (bank.equals("Visa")) {
+                driver.get(visaUrl);
+            } else {
+                System.out.println("Bank name is not valid. Please enter one of these banks: RBC, TD");
+            }
+        }
+
     }
 
-    public void startConversion() {
+    public void main() {
         // Set up the ChromeDriver path
         System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
 
@@ -57,7 +74,6 @@ public class ConvertCurrency {
 
         // Open banks webpages (RBC, CIBC, TD, etc.)
         openBankWebpages();
-
 
         // Open credit card webpages (E.g. Mastercard, Visa, etc.)
         openCreditCardWebpages();
