@@ -10,14 +10,6 @@ public class ConvertCurrency {
     private static final String WEBDRIVER_PATH = "/usr/local/bin/chromedriver";
     public WebDriver driver;
 
-    // Banks URL
-    private static String rbcUrl = "https://www.rbcbank.com/cgi-bin/tools/cadusd-foreign-exchange-calculator/start.cgi";
-    private static String tdUrl = "https://www.td.com/ca/en/personal-banking/solutions/exchange/currency-converter";
-
-    // Credit card companies URL
-    private static String mastercardUrl = "https://www.mastercard.ca/en-ca/personal/get-support/convert-currency.html";
-    private static String visaUrl = "https://www.visa.ca/en_CA/support/consumer/travel-support/exchange-rate-calculator.html";
-
     @BeforeEach
     public void beforeEachTest() {
         System.setProperty("webdriver.chrome.driver", WEBDRIVER_PATH);
@@ -32,14 +24,16 @@ public class ConvertCurrency {
 
     // Go to bank URLs and scrape the page to determine the best currency rate
     private void openBankWebpages(){
-        String[] listOfBanks = {"CIBC", "RBC", "TD", "Tangerine"};
+        String[] listOfBanks = {"RBC", "TD"};
+
+        BankConversionRate conversionRate = new BankConversionRate(driver);
 
         for (String bank : listOfBanks) {
            if (bank.equals("RBC")) {
-                driver.get(rbcUrl);
+               conversionRate.rbcConversionRate();
             } else if (bank.equals("TD")) {
-                driver.get(tdUrl);
-            } else {
+               conversionRate.tdConversionRate();
+           } else {
                 System.out.println("Bank name is not valid. Please enter one of these banks: RBC, TD");
             }
         }
@@ -49,16 +43,18 @@ public class ConvertCurrency {
     private void openCreditCardWebpages() {
         String[] listOfCreditCards = {"Mastercard", "Visa"};
 
+        CreditCardConversionRate conversionRate = new CreditCardConversionRate(driver);
+
+
         for (String bank : listOfCreditCards) {
             if (bank.equals("Mastercard")) {
-                driver.get(mastercardUrl);
+                conversionRate.mastercardConversionRate();
             } else if (bank.equals("Visa")) {
-                driver.get(visaUrl);
+                conversionRate.visaConversionRate();
             } else {
                 System.out.println("Bank name is not valid. Please enter one of these banks: RBC, TD");
             }
         }
-
     }
 
     public void main() {
