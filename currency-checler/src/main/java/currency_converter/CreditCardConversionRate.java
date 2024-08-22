@@ -15,11 +15,11 @@ public class CreditCardConversionRate {
     public CreditCardConversionRate(WebDriver driver) {
         this.driver = driver;
     }
-    protected String mastercardConversionRate() {
+    protected String mastercardConversionRate(int cadAmount, String currency) {
         return null;
     }
 
-    protected String visaConversionRate() {
+    protected String visaConversionRate(int cadAmount, String currency) {
         return null;
     }
 

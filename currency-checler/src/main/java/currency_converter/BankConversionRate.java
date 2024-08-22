@@ -15,11 +15,15 @@ public class BankConversionRate {
     public BankConversionRate(WebDriver driver) {
         this.driver = driver;
     }
-    protected String rbcConversionRate() {
-        return null;
+    protected int rbcConversionRate(int cadAmount, String currency) {
+        System.out.println(STR."Converted $\{cadAmount}CAD to \{currency}");
+        int convertedAmount = 0;
+
+
+        return convertedAmount;
     }
 
-    protected String tdConversionRate() {
+    protected String tdConversionRate(int cadAmount, String currency) {
         return null;
     }
 

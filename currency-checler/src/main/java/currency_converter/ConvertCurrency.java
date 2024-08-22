@@ -9,6 +9,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class ConvertCurrency {
     private static final String WEBDRIVER_PATH = "/usr/local/bin/chromedriver";
     public WebDriver driver;
+    private int cadAmount;
+    private String currency;
 
     @BeforeEach
     public void beforeEachTest() {
@@ -30,9 +32,9 @@ public class ConvertCurrency {
 
         for (String bank : listOfBanks) {
            if (bank.equals("RBC")) {
-               conversionRate.rbcConversionRate();
+               conversionRate.rbcConversionRate(cadAmount, currency);
             } else if (bank.equals("TD")) {
-               conversionRate.tdConversionRate();
+               conversionRate.tdConversionRate(cadAmount, currency);
            } else {
                 System.out.println("Bank name is not valid. Please enter one of these banks: RBC, TD");
             }
@@ -48,18 +50,21 @@ public class ConvertCurrency {
 
         for (String bank : listOfCreditCards) {
             if (bank.equals("Mastercard")) {
-                conversionRate.mastercardConversionRate();
+                conversionRate.mastercardConversionRate(cadAmount, currency);
             } else if (bank.equals("Visa")) {
-                conversionRate.visaConversionRate();
+                conversionRate.visaConversionRate(cadAmount, currency);
             } else {
                 System.out.println("Bank name is not valid. Please enter one of these banks: RBC, TD");
             }
         }
     }
 
-    public void main() {
+    public void main(String[] args) {
         // Set up the ChromeDriver path
         System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+
+        this.cadAmount = 100;
+        this.currency = "USD";
 
         // Initialize WebDriver
         WebDriver driver = new ChromeDriver();
@@ -75,7 +80,7 @@ public class ConvertCurrency {
         openCreditCardWebpages();
 
         // Print the title of the page
-        System.out.println("Page title is: " + driver.getTitle());
+        System.out.println(STR."Page title is: \{driver.getTitle()}");
 
         // Close the browser
         driver.quit();
