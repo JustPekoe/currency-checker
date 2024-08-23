@@ -27,18 +27,21 @@ public class ConvertCurrency {
     // Go to bank URLs and scrape the page to determine the best currency rate
     private void openBankWebpages(){
         String[] listOfBanks = {"RBC", "TD"};
+        String convertedRate =  null;
 
         BankConversionRate conversionRate = new BankConversionRate(driver);
 
         for (String bank : listOfBanks) {
            if (bank.equals("RBC")) {
-               conversionRate.rbcConversionRate(cadAmount, currency);
+               convertedRate = conversionRate.rbcConversionRate(cadAmount, currency);
             } else if (bank.equals("TD")) {
-               conversionRate.tdConversionRate(cadAmount, currency);
+               convertedRate = conversionRate.tdConversionRate(cadAmount, currency);
            } else {
                 System.out.println("Bank name is not valid. Please enter one of these banks: RBC, TD");
-            }
+           }
         }
+
+        System.out.println(STR."Converted $\{convertedRate}CAD to \{currency}");
     }
 
     // Go to credit card URLs and scrape the page to determine the best currency rate
