@@ -7,7 +7,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 
 public class ConvertCurrency {
-    private static final String WEBDRIVER_PATH = "/usr/local/bin/chromedriver";
+    private static final String WEBDRIVER_PATH = "~/IdeaProjects/currency-checler/chromedriver-mac-x64/chromedriver";
     public WebDriver driver;
     private int cadAmount;
     private String currency;
@@ -64,8 +64,6 @@ public class ConvertCurrency {
 
     public void main(String[] args) {
         // Set up the ChromeDriver path
-        System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
-
         this.cadAmount = 100;
         this.currency = "USD";
 
@@ -81,9 +79,6 @@ public class ConvertCurrency {
 
         // Open credit card webpages (E.g. Mastercard, Visa, etc.)
         openCreditCardWebpages();
-
-        // Print the title of the page
-        System.out.println(STR."Page title is: \{driver.getTitle()}");
 
         // Close the browser
         driver.quit();

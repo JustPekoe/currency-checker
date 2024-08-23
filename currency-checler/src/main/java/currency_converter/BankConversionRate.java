@@ -25,7 +25,7 @@ public class BankConversionRate {
 
         // Add input to the "Current I Have"
         WebElement currencyHaveAmount = driver.findElement(By.id("currency-have-amount"));
-        currencyHaveAmount.sendKeys(Stråing.valueOf(cadAmount));
+        currencyHaveAmount.sendKeys(String.valueOf(cadAmount));
 
         // Pressing enter without a specific target
         driver.switchTo().activeElement().sendKeys(Keys.ENTER);
@@ -33,7 +33,7 @@ public class BankConversionRate {
         // Get the currency that I want after conversion is completed
         WebElement currencyWantAmount = driver.findElement(By.id("currency-want-amount"));
 
-
+        convertedAmount = currencyWantAmount.getAttribute("value");
 
 
         return convertedAmount;
