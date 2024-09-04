@@ -8,22 +8,20 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class ConvertCurrency {
     private static final String WEBDRIVER_PATH = "~/IdeaProjects/currency-checker/chromedriver-mac-x64/chromedriver";
-    ///Users/t979940/IdeaProjects/currency-checler/chromedriver-mac-x64/chromedriver
     public WebDriver driver;
     private int cadAmount;
     private String currency;
 
     @BeforeEach
     public void beforeEachTest() {
-        // System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
+        System.out.println("Got to here");
         System.setProperty("webdriver.chrome.driver", WEBDRIVER_PATH);
-        driver = new ChromeDriver();
-        driver.get("https://www.telus.com/my-account");
+        this.driver = new ChromeDriver();
     }
 
     @AfterEach
     public void afterEachTest() {
-        driver.close();
+        this.driver.close();
     }
 
     // Go to bank URLs and scrape the page to determine the best currency rate
@@ -31,7 +29,7 @@ public class ConvertCurrency {
         String[] listOfBanks = {"RBC", "TD"};
         String convertedRate =  null;
 
-        BankConversionRate conversionRate = new BankConversionRate(driver);
+        BankConversionRate conversionRate = new BankConversionRate(this.driver);
 
         for (String bank : listOfBanks) {
            if (bank.equals("RBC")) {
@@ -68,10 +66,7 @@ public class ConvertCurrency {
         // Set up the ChromeDriver path
         this.cadAmount = 100;
         this.currency = "USD";
-
-        // Initialize WebDriver
-        WebDriver driver = new ChromeDriver();
-
+        
         //TODO: Display available banks and credit cards that can be used in the converter
 
         //TODO: Get user input of what banks/credit cards to to get currency of
