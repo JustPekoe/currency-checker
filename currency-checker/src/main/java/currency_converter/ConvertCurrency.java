@@ -1,27 +1,26 @@
 package currency_converter;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 
 public class ConvertCurrency {
-    private static final String WEBDRIVER_PATH = "~/IdeaProjects/currency-checker/chromedriver-mac-x64/chromedriver";
+    private static final String WEBDRIVER_PATH = "/Users/t979940/IdeaProjects/currency-checker/chromedriver-mac-x64/chromedriver";
     public WebDriver driver;
     private int cadAmount;
     private String currency;
 
-    @BeforeEach
-    public void beforeEachTest() {
-        System.out.println("Got to here");
+    // Set up the Web Drivers
+    public void setUp() {
         System.setProperty("webdriver.chrome.driver", WEBDRIVER_PATH);
-        this.driver = new ChromeDriver();
+        driver = new ChromeDriver();
     }
 
-    @AfterEach
-    public void afterEachTest() {
-        this.driver.close();
+    // Close drivers when operations are completed
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
     }
 
     // Go to bank URLs and scrape the page to determine the best currency rate
@@ -63,21 +62,26 @@ public class ConvertCurrency {
     }
 
     public void main(String[] args) {
-        // Set up the ChromeDriver path
-        this.cadAmount = 100;
-        this.currency = "USD";
-        
-        //TODO: Display available banks and credit cards that can be used in the converter
+        ConvertCurrency converter = new ConvertCurrency();
+        converter.setUp();
 
-        //TODO: Get user input of what banks/credit cards to to get currency of
+        try {
+            // Set up the ChromeDriver path
+            converter.cadAmount = 100;
+            converter.currency = "USD";
 
-        // Open banks webpages (RBC, CIBC, TD, etc.)
-        openBankWebpages();
+            //TODO: Display available banks and credit cards that can be used in the converter
 
-        // Open credit card webpages (E.g. Mastercard, Visa, etc.)
-        openCreditCardWebpages();
+            //TODO: Get user input of what banks/credit cards to to get currency of
 
-        // Close the browser
-        driver.quit();
+            // Open banks webpages (RBC, CIBC, TD, etc.)
+            converter.openBankWebpages();
+
+            // Open credit card webpages (E.g. Mastercard, Visa, etc.)
+            converter.openCreditCardWebpages();
+        } finally {
+            // Close the browser
+            converter.tearDown();
+        }
     }
 }

@@ -20,7 +20,7 @@ public class BankConversionRate {
 
     protected String rbcConversionRate(int cadAmount, String currency) {
         // Go to RBC's CAD to USD conversion calculator
-        this.driver.get(rbcUrl);
+        driver.get(rbcUrl);
 
         System.out.println(STR."Converting $\{cadAmount}CAD to \{currency}");
         String convertedAmount = null;
