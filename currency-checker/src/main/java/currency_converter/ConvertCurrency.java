@@ -1,26 +1,60 @@
 package currency_converter;
 
+import org.junit.jupiter.api.AfterEach;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+import java.io.File;
 
 
 public class ConvertCurrency {
     private static final String WEBDRIVER_PATH = "/Users/t979940/IdeaProjects/currency-checker/chromedriver-mac-x64/chromedriver";
     public WebDriver driver;
+    public ChromeDriverService service;
     private int cadAmount;
     private String currency;
+
 
     // Set up the Web Drivers
     public void setUp() {
         System.setProperty("webdriver.chrome.driver", WEBDRIVER_PATH);
-        driver = new ChromeDriver();
+
+        // Create ChromeOptions instance
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-extensions");
+        options.addArguments("--disable-popup-blocking");
+        options.addArguments("--profile-directory=Default");
+        options.addArguments("--ignore-certificate-errors");
+        options.addArguments("--disable-plugins-discovery");
+        options.addArguments("--incognito");
+
+        // Create ChromeDriverService instance
+        service = new ChromeDriverService.Builder()
+                .usingDriverExecutable(new File(WEBDRIVER_PATH))
+                .usingAnyFreePort()
+                .build();
+
+        try {
+            // Start the service
+            service.start();
+
+            // Initialize WebDriver with ChromeOptions
+            driver = new ChromeDriver(service, options);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            tearDown();
+        }
+
+        //driver = new ChromeDriver(options);
     }
 
     // Close drivers when operations are completed
     public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
+        service.stop();
+        driver.quit();
     }
 
     // Go to bank URLs and scrape the page to determine the best currency rate
