@@ -1,6 +1,5 @@
 package currency_converter;
 
-import org.junit.jupiter.api.AfterEach;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
@@ -45,7 +44,10 @@ public class ConvertCurrency {
 
         } catch (Exception e) {
             e.printStackTrace();
-            tearDown();
+            if (service != null && service.isRunning()) {
+                service.stop();
+            }
+            throw new RuntimeException("Failed to set up WebDriver", e);
         }
 
         //driver = new ChromeDriver(options);
@@ -53,8 +55,12 @@ public class ConvertCurrency {
 
     // Close drivers when operations are completed
     public void tearDown() {
-        service.stop();
-        driver.quit();
+        if (driver != null) {
+            driver.quit();
+        }
+        if (service != null && service.isRunning()) {
+            service.stop();
+        }
     }
 
     // Go to bank URLs and scrape the page to determine the best currency rate
