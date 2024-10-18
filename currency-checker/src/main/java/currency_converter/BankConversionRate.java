@@ -4,6 +4,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class BankConversionRate {
     private final WebDriver driver;
@@ -48,7 +52,14 @@ public class BankConversionRate {
         String convertedAmount = null;
 
         // Add input to the "Current I Have"
-        WebElement currencyHaveAmount = driver.findElement(By.id("currency-have-amount"));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement inputElement = wait.until(ExpectedConditions.elementToBeClickable(By.id("currency-have-amount")));
+
+        // Clear existing text and input new text
+        inputElement.clear();
+        inputElement.sendKeys("100");
+
+        /*WebElement currencyHaveAmount = driver.findElement(By.id("currency-have-amount"));
         currencyHaveAmount.sendKeys(String.valueOf(cadAmount));
 
         // Pressing enter without a specific target
@@ -58,7 +69,8 @@ public class BankConversionRate {
         WebElement currencyWantAmount = driver.findElement(By.id("currency-want-amount"));
 
         convertedAmount = currencyWantAmount.getAttribute("value");
-
+        */
+        System.out.println("Got to here");
         return convertedAmount;
     }
 }
